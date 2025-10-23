@@ -8,23 +8,21 @@ The complete booking journey was automated - from selecting the "NYC Icons Expre
 - **Cross-platform testing** - every test runs on both desktop (1920x1080) and mobile (390x844) viewports. Viewport-specific logic handles the key difference where mobile users navigate through an explicit Shopping Cart page between Questions and Checkout, while desktop users transition directly from Questions to Checkout. This ensures testing matches what users actually experience on each platform.
 - **24 automated test cases** that validate critical paths: ticket selection, date/time booking, form validation, promo codes, and order confirmation
 
-## Task Completion
+## Architecture Decision
+
+The booking flow is implemented as a single test suite with `{ testIsolation: false }`. This choice reflects a real user journey where each step naturally flows into the next. Breaking this into isolated tests would result in loss of true end-to-end validation.
+
+### Task Completion
 
 Each test maps directly to requirements. Every scenario from the task list has corresponding test coverage, documented in the test descriptions.
 
-## Test Stability
+### Test Stability
 
 Tests have been validated through multiple runs across different days and times. Strategic waits, API intercepts, and conditional logic handle real-world variability.
 
-## Maintenance
+### Maintenance
 
 Each page has a dedicated class containing all its selectors and user interactions. In case any UI element change, the fix would happen in one location inside the Page Object class. This reduces maintenance time when developers refactor the UI.
-
----
-
-# Architecture Decision
-
-The booking flow is implemented as a single test suite with `{ testIsolation: false }`. This choice reflects a real user journey where each step naturally flows into the next. Breaking this into isolated tests would result in loss of true end-to-end validation.
 
 ---
 
@@ -169,6 +167,7 @@ navrotska/
 │       └── helpers.ts                    # Utility functions
 │
 ├── cypress.config.js                     # Cypress configuration
+├── cypress.env.json                      # Environment variables (gitignored, create locally)
 ├── index.html                            # Application entry point
 ├── package.json                          # Project dependencies
 ├── tsconfig.json                         # TypeScript configuration
